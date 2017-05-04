@@ -1,4 +1,5 @@
 set myhour to get the (hours of (current date)) as integer
+set myminutes to get the (minutes of (current date)) as string
 set greets to ""
 
 -- say greetings according to time
@@ -14,9 +15,6 @@ else
 	set greets to "Good Evening"
 end if
 
-set myhour2 to get the (hours of (current date)) as integer
-set myminutes to get the (minutes of (current date)) as string
-
 -- add a leading zero to minutes
 set minuteslength to (length of myminutes)
 if minuteslength < 2 then
@@ -24,20 +22,22 @@ if minuteslength < 2 then
 end if
 
 --set AM/PM
-if (myhour2 > 11) then
+if (myhour > 11) then
 	set myminutes to myminutes & "PM"
 else
 	set myminutes to myminutes & "AM"
 end if
 
 -- change to 12-hour format
-if (myhour2 > 12) then
-	set myhour2 to myhour2 - 12
+if (myhour = 0) then
+	set myhour to myhour + 12
+else if (myhour > 12) then
+	set myhour to myhour - 12
 end if
 
 
 -- say the time
 -- the colon makes it say, eg, 20 : 45 instead of 2 thousand 45
 
-say greets & ". " & "The time is " & myhour2 & ":" & myminutes
+say greets & ". " & "The time is " & myhour & ":" & myminutes
 quit
