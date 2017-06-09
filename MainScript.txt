@@ -35,9 +35,43 @@ else if (myhour > 12) then
 	set myhour to myhour - 12
 end if
 
+--set volume
+set curVolume to output volume of (get volume settings)
+set volume output volume 30
 
 -- say the time
 -- the colon makes it say, eg, 20 : 45 instead of 2 thousand 45
 
 say greets & ". " & "The time is " & myhour & ":" & myminutes
-quit
+
+-- get path of reminder text file
+set myFile to "/Users/Lun/Library/Mobile Documents/com~apple~TextEdit/Documents/Reminder.txt"
+try
+	set reminder to read myFile
+	set numOfLines to the count paragraphs in reminder
+	
+	set speech to "You have" & numOfLines
+	
+	if (numOfLines > 0) then
+		if (numOfLines = 1) then
+			set grammer to "reminder"
+		else
+			set grammer to "reminders"
+		end if
+	end if
+	say speech & ", " & grammer
+	
+	set theDialog to "View " & grammer
+	display dialog theDialog with icon note buttons {"Cancel", "View"} default button "View" cancel button "Cancel"
+	set answer to button returned of result
+	if answer = "View" then
+		tell application "TextEdit" to open myFile
+	end if
+		
+on error msg
+	
+end try
+
+--set back previously volume
+set volume output volume curVolume
+
