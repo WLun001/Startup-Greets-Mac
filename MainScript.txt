@@ -65,9 +65,11 @@ try
 	display dialog theDialog with icon note buttons {"Cancel", "View"} default button "View" cancel button "Cancel"
 	set answer to button returned of result
 	if answer = "View" then
-		tell application "TextEdit" to open myFile
+		tell application "TextEdit"
+			open myFile
+		end tell
 	end if
-		
+	
 on error msg
 	
 end try
